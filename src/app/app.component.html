@@ -1,0 +1,159 @@
+<nav class="navbar navbar-dark bg-primary">
+  <a class="navbar-brand" href="#">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/HDFC_Bank_Logo.svg/2560px-HDFC_Bank_Logo.svg.png" width="180" height="30" class="d-inline-block align-top" alt="">
+   <b style="margin-left:0.5em" >Payment Gateway</b>
+  </a>
+  
+</nav>
+<form>
+  <div class="form-group">
+    <br>
+    <br>
+    <div class="container">
+      <h3 class="panel-title">Sender Details</h3>
+      <div class="row align-items-start">
+        <div class="col">
+          <label for="exampleInputEmail1">Customer Id</label>
+          <input [(ngModel)]="id" type="email" class="form-control" name="id" aria-describedby="emailHelp"(focusout)="fetchId()" >
+          
+        </div>
+        <div class="col">
+          <label *ngIf="isAccountActive" for="exampleInputEmail1">Customer Name with Balance</label>
+          <div class="card" *ngIf="isAccountActive" >
+            <div class="card-body">
+             {{account.name}}
+             <hr>
+             {{ "₹"+account.clearBalance }}
+            </div>
+          </div>
+        </div>
+       
+      </div>
+    
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <div class="container">
+      <h3 class="panel-title">Reciever Details</h3>
+      <div class="row align-items-start">
+        <div class="col"*ngIf="!bankAccount" >
+          <label for="exampleInputEmail1">BIC Code</label>
+          <input [(ngModel)]="bic" type="email" class="form-control" name="bic" aria-describedby="emailHelp"(focusout)="fetchBank()" >
+          
+        </div>
+        <div class="col"*ngIf="!bankAccount" >
+          <label *ngIf="isBankActive" for="exampleInputEmail1">bank name</label>
+          <div class="card" *ngIf="isBankActive" >
+            <div class="card-body">
+             {{bank.instituteName}}
+             
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row align-items-start">
+        <div class="col"*ngIf="!bankAccount"  >
+          <label for="exampleInputEmail1">Account holder name</label>
+          <input [(ngModel)]="accountHolderName"   class="form-control" name="accountHolderName" aria-describedby="emailHelp" (focusout)=" checkwithSdn()" >
+        </div>
+      </div>
+      <div class="row align-items-start">
+        <div class="col">
+          <label for="exampleInputEmail1">Account holder number</label>
+          <input [(ngModel)]="accountHolderNumber"  class="form-control" name="accountHolderNumber" aria-describedby="emailHelp" >
+        </div>
+      </div>
+    </div>
+   
+  </div>
+
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <div class="container">
+    <div class="row">
+        <div class="form-bg">
+            <form #Form="ngForm" (ngSubmit)="postTransaction(Form)"  >
+              <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Transaction Details</h3>
+                </div>
+  
+                <div class="panel-body">
+  
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Transfer Type</label>
+          <div class="card"  >
+            <div class="card-body">
+             {{transferType}}
+             
+            </div>
+          </div>
+                  </div>
+
+   <div class="form-group">
+                    <label for="mssgCode">Message Code</label>
+                    <select id="mssgCode" name="mssgCode" ngModel class="form-control">
+                      <option value="CHQB">CHQB</option>
+                      <option value="CORT">CORT</option>
+                      <option value="HOLD">HOLD</option>
+                      <option value="INTC">INTC</option>
+                      <option value="PHOB">PHOB</option>
+                      <option value="PHOI">PHOI</option>
+                      <option value="PHON">PHON</option>
+                      <option value="REPA">REPA</option>
+                      <option value="SDVA">SDVA</option>
+                      
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="amount">Enter Amount</label>
+                    <input id="amount" type="text" class="form-control"
+                          name="amount" [(ngModel)]="amount"(focusout)="calFeeNBal()" >
+                  </div>
+  
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Calculated Transfer Fee:</label>
+          <div class="card"  >
+            <div class="card-body" >
+             {{transferFee}}
+            </div>
+          </div>
+                  </div>
+                  <br>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1"><b>Clear Balance:</b></label>
+          <div class="card"  >
+            <div class="card-body" >
+             {{finalBalance}}
+            </div>
+          </div>
+                  </div>
+  
+                  
+  
+                 
+  
+    
+  
+                </div>
+                <br>
+                <div class="panel-footer">
+                  <button class="btn btn-primary" type="submit" [disabled]="!finalCheck">Submit</button>
+                </div>
+              </div>
+            </form>
+        </div>
+    </div>
+  </div>
+  
+  
+</form>
+
